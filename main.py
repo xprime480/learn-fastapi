@@ -14,15 +14,19 @@ def main():
 app = main()
 
 @app.get("/")
-def read_root():
-    logging.info("root request received")
-    return {"Hello": "World"}
+async def read_root():
+    logging.info("root GET request received")
+    #return {"Hello": "World"}
+    return [{"hello": "everybody"}, {"pie": "cherry"}]
+
+@app.put("/")
+async def put_root():
+    logging.info("root PUT request received")
+    #return {"Hello": "World"}
+    return str("What's up doc?")
 
 @app.get("/search")
 def read_item(q: str = None):
     logging.info("search request received {0}".format(q))
     return {"Hello": "World"}
     #return {"item_id": item_id, "q": q}
-
-if __name__ == '__main__' :
-    main()

@@ -1,5 +1,6 @@
 # project stuff
 commitmsg
+logs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
