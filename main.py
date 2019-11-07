@@ -15,6 +15,7 @@ def main():
 
 app = main()
 
+
 @app.get("/")
 async def read_root():
     logging.info("root GET request received")
@@ -45,4 +46,10 @@ def read_item(q: str = None):
 @app.get("/family/{who}")
 async def read_family(who: family.Family):
     logging.info("family request for {0}".format(who))
-    return family.data[who]
+    return family.data[who.value]
+
+
+@app.get("/long/{what:path}")
+async def read_long(what: str):
+    logging.info("long request for {0}".format(what))
+    return what
