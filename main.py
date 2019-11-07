@@ -19,6 +19,11 @@ async def read_root():
     #return {"Hello": "World"}
     return [{"hello": "everybody"}, {"pie": "cherry"}]
 
+@app.get("/items/{item_id}")
+async def get_item(item_id: int):
+    logging.info("getting item {}".format(item_id))
+    return {"item": item_id}
+
 @app.put("/")
 async def put_root():
     logging.info("root PUT request received")
