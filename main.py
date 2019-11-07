@@ -2,6 +2,7 @@
 
 import logging
 import family
+import carinfo
 from math import sqrt
 from fastapi import FastAPI
 
@@ -60,3 +61,8 @@ async def read_long(what: str):
 async def hypotenuse(x: float = 1.0, y: float = 1.0):
     logging.info("hypotenuse request for {0} {1}".format(x, y))
     return sqrt(x*x + y*y)
+
+
+@app.post("/car")
+async def post_car(car:carinfo.CarInfo):
+    return car
