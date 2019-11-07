@@ -2,6 +2,7 @@
 
 import logging
 import family
+from math import sqrt
 from fastapi import FastAPI
 
 def main():
@@ -53,3 +54,9 @@ async def read_family(who: family.Family):
 async def read_long(what: str):
     logging.info("long request for {0}".format(what))
     return what
+
+
+@app.get("/hypotenuse/")
+async def hypotenuse(x: float = 1.0, y: float = 1.0):
+    logging.info("hypotenuse request for {0} {1}".format(x, y))
+    return sqrt(x*x + y*y)
