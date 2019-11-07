@@ -1,6 +1,7 @@
-"""Main driver for the Myndshft takehome assignment."""
+"""Main driver for Learning fastapi."""
 
 import logging
+import family
 from fastapi import FastAPI
 
 def main():
@@ -11,6 +12,7 @@ def main():
 
     return FastAPI()
 
+
 app = main()
 
 @app.get("/")
@@ -19,10 +21,12 @@ async def read_root():
     #return {"Hello": "World"}
     return [{"hello": "everybody"}, {"pie": "cherry"}]
 
+
 @app.get("/items/{item_id}")
 async def get_item(item_id: int):
     logging.info("getting item {}".format(item_id))
     return {"item": item_id}
+
 
 @app.put("/")
 async def put_root():
@@ -30,8 +34,15 @@ async def put_root():
     #return {"Hello": "World"}
     return str("What's up doc?")
 
+
 @app.get("/search")
 def read_item(q: str = None):
     logging.info("search request received {0}".format(q))
     return {"Hello": "World"}
     #return {"item_id": item_id, "q": q}
+
+
+@app.get("/family/{who}")
+async def read_family(who: family.Family):
+    logging.info("family request for {0}".format(who))
+    return family.data[who]
