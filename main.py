@@ -4,7 +4,8 @@ import logging
 import family
 import carinfo
 from math import sqrt
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
+from typing import List
 
 def main():
     logging.basicConfig(level=logging.DEBUG,
@@ -57,12 +58,28 @@ async def read_long(what: str):
     return what
 
 
-@app.get("/hypotenuse/")
+@app.get("/hypotenuse")
 async def hypotenuse(x: float = 1.0, y: float = 1.0):
     logging.info("hypotenuse request for {0} {1}".format(x, y))
     return sqrt(x*x + y*y)
 
 
 @app.post("/car")
-async def post_car(car:carinfo.CarInfo):
+async def post_car(car: carinfo.CarInfo):
+    logging.info("car request")
     return car
+
+
+@app.get("/qv")
+async def get_qv(q: str = Query(None, min_length=3, regex="^a.*z$")):
+    logging.info("query validation {0}".format(q))
+    return {"query": q}
+
+
+@app.get("/qvs")
+async def get_qv(q: List[str] = Query(None)):
+    logging.info("query validation {0}".format(q))
+    if q:
+        return {"query": q, "count": len(q)}
+    else:
+        return {"count": 0}
