@@ -83,3 +83,15 @@ async def get_qv(q: List[str] = Query(None)):
         return {"query": q, "count": len(q)}
     else:
         return {"count": 0}
+
+
+@app.get("/qvsd")
+async def get_qv(q: List[str] = Query(['foo', 'bar', 'quux'])):
+    logging.info("query validation {0}".format(q))
+    return {"query": q, "count": len(q)}
+
+
+@app.get("/qa/")
+async def get_qa(q: str = Query(None, alias="q-name")):
+    logging.info("query validation {0}".format(q))
+    return {"query": q}
