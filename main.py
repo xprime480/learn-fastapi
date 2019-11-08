@@ -4,7 +4,7 @@ import logging
 import family
 import carinfo
 from math import sqrt
-from fastapi import FastAPI, Query, Path
+from fastapi import FastAPI, Query, Path, Body
 from typing import List
 
 def main():
@@ -97,3 +97,9 @@ async def get_qv(q: List[str] = Query(['foo', 'bar', 'quux'])):
 async def get_qa(q: str = Query(None, alias="q-name")):
     logging.info("query validation {0}".format(q))
     return {"query": q}
+
+
+@app.put("/body/{body_id}")
+async def update_item(body_id: int = 0, answer: int = Body(..., lt=43)):
+    logging.info("query validation {0} -- {1}".format(body_id, answer))
+    return {"body_id": body_id, "answer": answer}
