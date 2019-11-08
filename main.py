@@ -4,7 +4,7 @@ import logging
 import family
 import carinfo
 from math import sqrt
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Path
 from typing import List
 
 def main():
@@ -27,7 +27,9 @@ async def read_root():
 
 
 @app.get("/items/{item_id}")
-async def get_item(item_id: int):
+async def get_item(
+    item_id: int = Path(..., title="Item Identifier", gt=0, lt=1000)
+    ):
     logging.info("getting item {}".format(item_id))
     return {"item": item_id}
 
