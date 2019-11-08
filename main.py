@@ -103,3 +103,12 @@ async def get_qa(q: str = Query(None, alias="q-name")):
 async def update_item(body_id: int = 0, answer: int = Body(..., lt=43)):
     logging.info("query validation {0} -- {1}".format(body_id, answer))
     return {"body_id": body_id, "answer": answer}
+
+
+@app.put("/body2/{body_id}")
+async def update_item(
+    car: carinfo.CarInfo,
+    body_id: int = 0,
+    answer: int = Body(..., lt=43)):
+    logging.info("query validation {0} -- {1}".format(body_id, answer))
+    return {"body_id": body_id, "answer": answer, "make": car.make}
